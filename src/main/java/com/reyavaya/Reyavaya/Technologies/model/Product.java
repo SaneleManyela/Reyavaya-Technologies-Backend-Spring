@@ -1,10 +1,6 @@
 package com.reyavaya.Reyavaya.Technologies.model;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.sql.Blob;
 
 @Entity
 @Table(name="Product")
