@@ -2,7 +2,6 @@ package com.reyavaya.Reyavaya.Technologies.controllers;
 
 import com.reyavaya.Reyavaya.Technologies.model.Employee;
 import com.reyavaya.Reyavaya.Technologies.repository.LoginRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +11,16 @@ import java.util.LinkedHashMap;
 @RestController
 @RequestMapping("/api/v1/")
 public class LoginController {
-    @Autowired
-    private LoginRepository loginRepository;
+    private final LoginRepository loginRepository;
+
+    public LoginController(LoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
+    }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody LinkedHashMap<String, String> employee) {
+    public ResponseEntity<Employee> login(@RequestBody LinkedHashMap<String, String> employee) {
         System.out.println(employee);
-        Employee emp = loginRepository.findByUsername(employee.get("username"));
-        boolean isLogged = false;
-        if(emp != null) {
-            isLogged = emp.getPassword().equals(employee.get("password"));
-        }
-        return isLogged;
+        Employee emp = loginRepository.findByUsernameAndPassword(employee.get("username"), employee.get("password"));
+        return ResponseEntity.ok(emp);
     }
 }

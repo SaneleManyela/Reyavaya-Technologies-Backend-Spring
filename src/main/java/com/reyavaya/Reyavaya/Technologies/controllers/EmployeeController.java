@@ -37,7 +37,8 @@ public class EmployeeController {
 	public Employee createEmployee(@RequestBody LinkedHashMap<String, String> employee) {
 		System.out.println(employee);
 		Employee employeeObj = new Employee(
-				employee.get("firstName"), employee.get("lastName"),
+				employee.get("firstName"),
+				employee.get("lastName"),
 				employee.get("email"),
 				employee.get("address"),
 				employee.get("contactNo"),
@@ -64,7 +65,12 @@ public class EmployeeController {
 		employee.setFirstName(employeeDetails.getFirstName());
 		employee.setLastName(employeeDetails.getLastName());
 		employee.setEmail(employeeDetails.getEmail());
-		
+		employee.setAddress(employeeDetails.getAddress());
+		employee.setContactNo(employeeDetails.getContactNo());
+		employee.setPassword(employeeDetails.getPassword());
+		employee.setUsername(employeeDetails.getUsername());
+		employee.setRole(employeeDetails.getRole());
+
 		Employee updatedEmployee = employeeRepository.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -14,10 +15,16 @@ public class TransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @GetMapping("/transactions")
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
     @PostMapping("/transaction")
     public Transaction createTransaction(@RequestBody LinkedHashMap<String, String> transaction){
-        Transaction transactionObj = new Transaction(Long.parseLong(transaction.get("employee")),
-                Long.parseLong(transaction.get("sale")), transaction.get("transactionDate"));
+        Transaction transactionObj = new Transaction(
+                Long.parseLong(transaction.get("employee")),
+                Long.parseLong(transaction.get("sale")),
+                transaction.get("transactionDate"));
         return transactionRepository.save(transactionObj);
     }
 }

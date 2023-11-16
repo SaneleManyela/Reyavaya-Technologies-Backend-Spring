@@ -25,8 +25,14 @@ public class StockController {
     @PostMapping("/stock")
     private Stock createStock(@RequestBody LinkedHashMap<String, String> stock) {
         Stock stockObj = new Stock(Long.parseLong(stock.get("product")),
-                Integer.parseInt(stock.get("Qty")));
+                Integer.parseInt(stock.get("qty")));
         return stockRepository.save(stockObj);
+    }
+
+    @GetMapping("/stock/{id}")
+    public ResponseEntity<Stock> getStockById(@PathVariable Long id) {
+        Stock stock = stockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock with id "+id+" does not exist"));
+        return ResponseEntity.ok(stock);
     }
 
     @PutMapping("/stock/{id}")
@@ -34,7 +40,6 @@ public class StockController {
        Stock stockObj = stockRepository.findById(id).orElseThrow(
                () -> new ResourceNotFoundException(
                        "Stock with id "+id+" does not exist"));
-       stockObj.setProduct(stock.getProduct());
        stockObj.setQty(stock.getQty());
        Stock updatedStock = stockRepository.save(stockObj);
        return ResponseEntity.ok(updatedStock);

@@ -22,10 +22,13 @@ public class SaleController {
 
     @PostMapping("/sales")
     public Sale createSale(@RequestBody LinkedHashMap<String, String> sale) {
-        Sale saleObj = new Sale(Long.parseLong(sale.get("product")),
-                Long.parseLong(sale.get("supplier")),Integer.parseInt(sale.get("sold_Qty")),
-                Double.parseDouble(sale.get("sellingPrice")), Double.parseDouble(sale.get("saleTotal")),
-                sale.get("saleDate"));
+        Sale saleObj = new Sale(
+                Long.parseLong(sale.get("product")),
+                Long.parseLong(sale.get("supplier")),
+                Integer.parseInt(sale.get("sold_Qty")),
+                Double.parseDouble(sale.get("sellingPrice")),
+                Double.parseDouble(sale.get("saleTotal")),
+                        sale.get("saleDate"));
         return saleRepository.save(saleObj);
     }
 }
